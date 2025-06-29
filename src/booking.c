@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "booking.h"
 
 void make_payment(float amount) {
