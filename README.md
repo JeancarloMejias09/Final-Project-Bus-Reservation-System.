@@ -29,7 +29,7 @@ The Bus Reservation System is a terminal-based application written in C that mod
 
 1. **Authentication** → 2. **Route Selection** → 3. **Schedule Choice** → 4. **Ticket Quantity** → 5. **Payment** → 6. **Receipt**
 
-## Tree Structure of Execution Path
+### Tree Structure of Execution Path
 ```mermaid
 graph TD
     A[Authentication Menu] --> B{User Choice}
