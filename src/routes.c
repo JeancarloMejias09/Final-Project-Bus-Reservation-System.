@@ -1,5 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 #include "routes.h"
+
+typedef struct {
+    int id;
+    char day[20];
+    char time[10];
+} Schedule;
 
 int show_routes() {
     printf("\nAvailable Routes:\n");
@@ -9,51 +16,81 @@ int show_routes() {
     printf("4. Heredia - San José (₡800)\n");
     printf("5. Cartago - San José (₡675)\n");
     printf("6. Alajuela - San José (₡735)\n");
-    
+
     int choice;
     printf("\nSelect a route (1-6): ");
     scanf("%d", &choice);
-    
+
     return choice;
 }
 
 int show_schedules(int route_id) {
-    printf("\nAvailable Schedules:\n");
+    Schedule schedules[10];
+    int count = 0;
     
+    // Populate schedules based on route
     if(route_id == 1 || route_id == 4) {
         // San José-Heredia or Heredia-San José
-        printf("Monday-Saturday: 5:00 am to 10:00 pm (every 8 minutes)\n");
-        printf("Sunday: 5:00 am to 10:00 pm (every 10 minutes)\n");
-    } 
+        strcpy(schedules[count].day, "Monday-Friday");
+        strcpy(schedules[count].time, "5:00 am");
+        schedules[count].id = count+1;
+        count++;
+        
+        strcpy(schedules[count].day, "Saturday");
+        strcpy(schedules[count].time, "6:00 am");
+        schedules[count].id = count+1;
+        count++;
+        
+        strcpy(schedules[count].day, "Sunday");
+        strcpy(schedules[count].time, "7:00 am");
+        schedules[count].id = count+1;
+        count++;
+    }
     else if(route_id == 3 || route_id == 6) {
         // San José-Alajuela or Alajuela-San José
-        printf("Monday-Friday: 3:00 am to 10:00 pm (every 10 minutes)\n");
-        printf("Saturday-Sunday: 4:00 am to 10:00 pm (every 12 minutes)\n");
-    } 
-    else if(route_id == 2) {
-        // San José-Cartago
-        printf("Monday-Friday: 4:00 am to 11:00 pm (every 12-17 minutes)\n");
-        printf("Saturday-Sunday: 5:00 am to 11:00 pm (every 15 minutes)\n");
+        strcpy(schedules[count].day, "Monday-Friday");
+        strcpy(schedules[count].time, "6:00 am");
+        schedules[count].id = count+1;
+        count++;
+        
+        strcpy(schedules[count].day, "Saturday");
+        strcpy(schedules[count].time, "7:00 am");
+        schedules[count].id = count+1;
+        count++;
     }
-    else if(route_id == 5) {
-        // Cartago-San José
-        printf("Monday-Friday: 4:30 am to 11:00 pm (every 20 minutes)\n");
-        printf("Saturday-Sunday: 5:00 am to 11:00 pm (every 15 minutes)\n");
+    else if(route_id == 2 || route_id == 5) {
+        // San José-Cartago or Cartago-San José
+        strcpy(schedules[count].day, "Monday-Friday");
+        strcpy(schedules[count].time, "5:30 am");
+        schedules[count].id = count+1;
+        count++;
+        
+        strcpy(schedules[count].day, "Weekend");
+        strcpy(schedules[count].time, "8:00 am");
+        schedules[count].id = count+1;
+        count++;
     }
+
+    // Display available schedules
+    printf("\nAvailable Schedules:\n");
+    for(int i = 0; i < count; i++) {
+        printf("%d. %s at %s\n", schedules[i].id, schedules[i].day, schedules[i].time);
+    }
+
+    // Let user select a schedule
+    int choice;
+    printf("\nSelect a schedule (1-%d): ", count);
+    scanf("%d", &choice);
     
-    printf("\nPress Enter to confirm your selection...");
-    getchar();  // Clear input buffer
-    getchar();  // Wait for Enter
-    
-    return route_id;
+    return choice; // Return selected schedule ID
 }
 
-float get_price(int route_id) {  // Removed schedule_id parameter
-    // Pricing based on your specifications
+float get_price(int route_id) {
+    // Pricing
     switch(route_id) {
         case 1: // San José-Heredia
         case 4: // Heredia-San José
-            return 800.00f;  // Colones
+            return 800.00f;
         case 2: // San José-Cartago
         case 5: // Cartago-San José
             return 675.00f;
@@ -61,6 +98,18 @@ float get_price(int route_id) {  // Removed schedule_id parameter
         case 6: // Alajuela-San José
             return 735.00f;
         default:
-            return 0.00f;  // Should never happen with proper input validation
+            return 0.00f;
     }
+}
+
+int get_ticket_count() {
+    int tickets;
+    printf("\nEnter number of tickets (1-10): ");
+    scanf("%d", &tickets);
+    
+    // Basic input validation
+    if(tickets < 1) tickets = 1;
+    if(tickets > 10) tickets = 10;
+    
+    return tickets;
 }

@@ -42,16 +42,17 @@ void show_auth_menu() {
 
 int main() {
     show_auth_menu();
-    
+
     clear_screen();
     print_header("COSTA RICA'S BUS RESERVATION SYSTEM");
-    
+
     int route_id = show_routes();
-    int schedule_id = show_schedules(route_id);  //Unused
-    (void)schedule_id;  //Mark as unused to suppress warning
-    float price = get_price(route_id);
+    int schedule_id = show_schedules(route_id);
+    int tickets = get_ticket_count();
+
+    float price = get_price(route_id) * tickets; // Calculate total price
     make_payment(price);
-    generate_receipt(route_id);
-    
+    generate_receipt(route_id, schedule_id, tickets);
+
     return 0;
 }

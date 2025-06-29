@@ -3,7 +3,7 @@
 #include "receipt.h"
 #include "routes.h"  // To use get_price()
 
-void generate_receipt(int route_id) {
+void generate_receipt(int route_id, int schedule_id, int tickets) {
     time_t now;
     time(&now);
     
@@ -24,30 +24,31 @@ void generate_receipt(int route_id) {
         default: route_name = "Unknown Route";
     }
     
-    // Get price from routes module
-    float price = get_price(route_id);
+    // Get price and calculate total
+    float unit_price = get_price(route_id);
+    float total_price = unit_price * tickets;
     
     // Print ticket details
     printf("\nRoute: %s\n", route_name);
-    printf("Price: ₡%.2f\n", price);
+    printf("Unit Price: ₡%.2f\n", unit_price);
+    printf("Number of Tickets: %d\n", tickets);
+    printf("Total Price: ₡%.2f\n", total_price);
     
-    // Print schedule information
-    printf("\nDeparture Times Available:\n");
-    if(route_id == 1 || route_id == 4) {
-        printf("- Monday-Saturday: Every 8 minutes (5:00 am - 10:00 pm)\n");
-        printf("- Sunday: Every 10 minutes (5:00 am - 10:00 pm)\n");
-    } 
-    else if(route_id == 3 || route_id == 6) {
-        printf("- Weekdays: Every 10 minutes (3:00 am - 10:00 pm)\n");
-        printf("- Weekends: Every 12 minutes (4:00 am - 10:00 pm)\n");
-    } 
-    else if(route_id == 2) {
-        printf("- Weekdays: Every 12-17 minutes (4:00 am - 11:00 pm)\n");
-        printf("- Weekends: Every 15 minutes (5:00 am - 11:00 pm)\n");
-    }
-    else if(route_id == 5) {
-        printf("- Weekdays: Every 20 minutes (4:30 am - 11:00 pm)\n");
-        printf("- Weekends: Every 15 minutes (5:00 am - 11:00 pm)\n");
+    // Print specific schedule information
+    printf("\nSelected Schedule:\n");
+    switch(schedule_id) {
+        case 1:
+            printf("- Monday-Friday at 5:00 am\n");
+            break;
+        case 2:
+            printf("- Saturday at 6:00 am\n");
+            break;
+        case 3:
+            printf("- Sunday at 7:00 am\n");
+            break;
+        // Add more cases as needed
+        default:
+            printf("- Standard schedule\n");
     }
     
     // Generate QR code placeholder
@@ -55,7 +56,7 @@ void generate_receipt(int route_id) {
     printf("+---------------------+\n");
     printf("|  * * *    * * *     |\n");
     printf("|  *     *      *     |\n");
-    printf("|  *   ROUTE %2d   * |\n", route_id);
+    printf("|  * TICKET x%-2d  * |\n", tickets);  // Updated to show ticket count
     printf("|  *     *      *     |\n");
     printf("|  * * *    * * *     |\n");
     printf("+---------------------+\n");

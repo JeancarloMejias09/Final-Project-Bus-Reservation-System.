@@ -6,5 +6,7 @@
 int show_routes();
 int show_schedules(int route_id);
 float get_price(int route_id);
+int get_selected_schedule();
+int get_ticket_count();
 
 #endif
