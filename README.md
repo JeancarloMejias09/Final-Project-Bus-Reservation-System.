@@ -1,19 +1,48 @@
-# Bus Reservation System for Costa Rica
+# Bus Reservation System for Costa Rica 🚍
 
-The Bus Reservation System is a program designed to address current challenges in Costa Rica's public transportation services. This terminal-based application, written in C, enables users to view available routes, schedules, and prices, as well as purchase tickets directly through the system.
+The Bus Reservation System is a terminal-based application written in C that modernizes ticket purchasing for Costa Rica's public transportation. It addresses current challenges by providing an efficient digital booking solution.
 
-## Features
+## Key Features ✨
 
-Key features of the program include:
+- **User Authentication** 🔒
+  - Secure login/signup system
 
-- User authentication.
-- Route selection.
-- Schedule viewing.
-- Ticket booking.
-- Receipt generation.
+- **Route Management** 🗺️
+  - 6 major intercity routes
+  - Current pricing (₡)
 
-## How to Execute the Program
+- **Smart Scheduling** ⏰
+  - Route-specific schedules
+  - Day/time selection (e.g., "Monday at 1:00 PM")
 
-1. Clone the repository using the terminal.
-2. Run `make` to compile the program.
-3. Execute with `./Bus_Reservation_System`.
+- **Booking System** 💳
+  - Variable ticket quantities
+  - Multiple payment methods
+  - Price calculation
+
+- **Digital Receipts** 🧾
+  - Detailed booking confirmation
+  - QR code for validation
+  - Transaction history
+
+## Enhanced Workflow 🔄
+
+1. **Authentication** → 2. **Route Selection** → 3. **Schedule Choice** → 4. **Ticket Quantity** → 5. **Payment** → 6. **Receipt**
+
+## Tree Structure of Execution Path
+```mermaid
+graph TD
+    A[Authentication Menu] --> B{User Choice}
+    B -->|1| C[Login]
+    B -->|2| D[Sign Up]
+    B -->|3| E[Exit]
+    C --> F[Main System]
+    D --> C
+    F --> G[Route Selection]
+    G --> H[Schedule Selection]
+    H --> I[Ticket Quantity]
+    I --> J[Payment Processing]
+    J --> K[Receipt Generation]
+    K --> L[Exit]
+
+
