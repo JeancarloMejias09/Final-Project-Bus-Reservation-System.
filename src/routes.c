@@ -131,3 +131,34 @@ int show_schedules(int route_id) {
     
     return choice;
 }
+
+int show_routes() {
+    printf("\nAvailable Routes:\n");
+    printf("1. San José - Heredia (₡800)\n");
+    printf("2. San José - Cartago (₡675)\n");
+    printf("3. San José - Alajuela (₡735)\n");
+    printf("4. Heredia - San José (₡800)\n");
+    printf("5. Cartago - San José (₡675)\n");
+    printf("6. Alajuela - San José (₡735)\n");
+
+    int choice;
+    printf("\nSelect a route (1-6): ");
+    scanf("%d", &choice);
+    return choice;
+}
+
+float get_price(int route_id) {
+    switch(route_id) {
+        case 1: case 4: return 800.00f;
+        case 2: case 5: return 675.00f;
+        case 3: case 6: return 735.00f;
+        default: return 0.00f;
+    }
+}
+
+int get_ticket_count() {
+    int tickets;
+    printf("\nEnter number of tickets (1-10): ");
+    scanf("%d", &tickets);
+    return (tickets < 1) ? 1 : (tickets > 10) ? 10 : tickets;
+}
